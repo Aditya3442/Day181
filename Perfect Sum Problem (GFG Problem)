@@ -1,0 +1,29 @@
+class Solution {
+    // Function to calculate the number of subsets with a given sum
+    public int recur(int index , int target , int[] nums , int[][] dp) {
+        if(index == 0 ){
+            if(target == 0 && nums[index] == 0) return 2;
+            if(target == 0 || target == nums[index]) return 1;
+            else return 0;
+        }
+           
+            
+        if(dp[index][target] != -1)
+            return dp[index][target];
+            
+        int notTake = recur(index - 1 , target , nums , dp);
+        int take = 0;
+        if(target >= nums[index])
+            take = recur(index -1 , target - nums[index] , nums , dp);
+        
+        return dp[index][target] = take + notTake;
+    }
+    public int perfectSum(int[] nums, int target) {
+        // code here
+        int n = nums.length;
+        int dp[][] = new int[n][target + 1];
+        for(int arr[] : dp)
+           Arrays.fill(arr , -1);
+        return recur(n - 1 , target , nums , dp);
+    }
+}
